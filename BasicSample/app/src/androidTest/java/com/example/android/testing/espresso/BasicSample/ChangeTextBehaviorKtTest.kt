@@ -18,6 +18,7 @@ package com.example.android.testing.espresso.BasicSample
 
 import androidx.test.ext.junit.rules.activityScenarioRule
 import android.app.Activity
+import android.widget.EditText
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.launchActivity
 import androidx.test.espresso.Espresso.onView
@@ -33,6 +34,8 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.w3c.dom.Text
+import org.junit.Assert.*
 
 
 /**
@@ -54,9 +57,45 @@ class ChangeTextBehaviorKtTest {
      */
     @get:Rule var activityScenarioRule = activityScenarioRule<MainActivity>()
 
+    // Enter Text, change Text button - Validate String
+    @Test
+    fun changeText_TestString() {
+        onView(withId(R.id.editTextUserInput))
+            .perform(typeText(STRING_TO_BE_TYPED), closeSoftKeyboard())
+        onView(withId(R.id.changeTextBt)).perform(click())
+        onView(withId(R.id.textToBeChanged)).check(matches(withText(STRING_TO_BE_TYPED)))
+    }
+
+    //Enter text, open activity, change text button, test string in show activity
+    @Test
+    fun changeTextOpenActivity_TestString() {
+        onView(withId(R.id.editTextUserInput))
+            .perform(typeText(STRING_TO_BE_TYPED), closeSoftKeyboard())
+        onView(withId(R.id.changeTextBt)).perform(click())
+        onView(withId(R.id.activityChangeTextBtn)).perform(click())
+        onView(withId(R.id.show_text_view)).check(matches(withText(STRING_TO_BE_TYPED)))
+    }
+
+    //Without entering anything and press Change Text button and
+    //test the string (empty/null)
+    @Test
+    fun empty_TestString() {
+        onView(withId(R.id.changeTextBt)).perform(click())
+        onView(withId(R.id.textToBeChanged)).check(matches(withText("")))
+    }
+
+    //Without entering anything and press Open Activity and
+    //Change Text button, and test the string in ShowTextActivity
+    //(null).
+    @Test
+    fun emptyNewActivity_TestString() {
+        onView(withId(R.id.changeTextBt)).perform(click())
+        onView(withId(R.id.activityChangeTextBtn)).perform(click())
+        onView(withId(R.id.show_text_view)).check(matches(withText("")))
+    }
+
     @Test
     fun changeText_sameActivity() {
-
         // Type text and then press the button.
         onView(withId(R.id.editTextUserInput))
                 .perform(typeText(STRING_TO_BE_TYPED), closeSoftKeyboard())
@@ -78,7 +117,6 @@ class ChangeTextBehaviorKtTest {
     }
 
     companion object {
-
-        val STRING_TO_BE_TYPED = "Espresso"
+        val STRING_TO_BE_TYPED = "123"
     }
 }
