@@ -130,7 +130,7 @@ class ChangeTextBehaviorKtTest {
     }
 
     companion object {
-        val STRING_TO_BE_TYPED = "123"
-        val STRING_TEST = "321"
+        const val STRING_TO_BE_TYPED = "123"
+        const val STRING_TEST = "321"
     }
 }
