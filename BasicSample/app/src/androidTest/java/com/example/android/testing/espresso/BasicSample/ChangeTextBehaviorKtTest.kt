@@ -18,9 +18,6 @@ package com.example.android.testing.espresso.BasicSample
 
 import androidx.test.ext.junit.rules.activityScenarioRule
 import android.app.Activity
-import android.widget.EditText
-import androidx.test.core.app.ActivityScenario
-import androidx.test.core.app.launchActivity
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.*
@@ -30,13 +27,10 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.w3c.dom.Text
 import org.junit.Assert.*
-
 
 /**
  * The kotlin equivalent to the ChangeTextBehaviorTest, that
@@ -49,6 +43,8 @@ import org.junit.Assert.*
 @RunWith(AndroidJUnit4::class)
 @LargeTest
 class ChangeTextBehaviorKtTest {
+
+
 
     /**
      * Use [ActivityScenarioRule] to create and launch the activity under test before each test,
@@ -66,6 +62,14 @@ class ChangeTextBehaviorKtTest {
         onView(withId(R.id.textToBeChanged)).check(matches(withText(STRING_TO_BE_TYPED)))
     }
 
+    @Test
+    fun changeTest_TestString_2() {
+        onView(withId(R.id.editTextUserInput))
+            .perform(typeText(STRING_TEST), closeSoftKeyboard())
+        onView(withId(R.id.changeTextBt)).perform(click())
+        onView(withId(R.id.textToBeChanged)).check(matches(withText(STRING_TEST)))
+    }
+
     //Enter text, open activity, change text button, test string in show activity
     @Test
     fun changeTextOpenActivity_TestString() {
@@ -74,6 +78,15 @@ class ChangeTextBehaviorKtTest {
         onView(withId(R.id.changeTextBt)).perform(click())
         onView(withId(R.id.activityChangeTextBtn)).perform(click())
         onView(withId(R.id.show_text_view)).check(matches(withText(STRING_TO_BE_TYPED)))
+    }
+
+    @Test
+    fun changeTextOpenActivity_TestString_2() {
+        onView(withId(R.id.editTextUserInput))
+            .perform(typeText(STRING_TEST), closeSoftKeyboard())
+        onView(withId(R.id.changeTextBt)).perform(click())
+        onView(withId(R.id.activityChangeTextBtn)).perform(click())
+        onView(withId(R.id.show_text_view)).check(matches(withText(STRING_TEST)))
     }
 
     //Without entering anything and press Change Text button and
@@ -118,5 +131,6 @@ class ChangeTextBehaviorKtTest {
 
     companion object {
         val STRING_TO_BE_TYPED = "123"
+        val STRING_TEST = "321"
     }
 }
