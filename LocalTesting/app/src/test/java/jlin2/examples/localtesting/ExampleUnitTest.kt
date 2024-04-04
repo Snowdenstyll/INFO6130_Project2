@@ -15,6 +15,7 @@ class ExampleUnitTest {
     fun emailFormatCorrect_test() {
         assertTrue(emailValidator.isValidEmail("123@abc.com"))
         assertTrue(emailValidator.isValidEmail("123@abc.co.ca"))
+        assertTrue(emailValidator.isValidEmail("v_soni202601@fanshaweonline.ca"))
     }
     @Test
     fun emailFormatIncorrect_test() {
@@ -24,5 +25,6 @@ class ExampleUnitTest {
         assertFalse(emailValidator.isValidEmail("testing123"))
         assertFalse(emailValidator.isValidEmail(" "))
         assertFalse(emailValidator.isValidEmail(null))
+        assertFalse(emailValidator.isValidEmail("v_soni202601@fanshaweonlineca"))
     }
 }
